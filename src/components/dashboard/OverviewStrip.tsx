@@ -1,6 +1,20 @@
 import { riskSnapshots } from "@/lib/mock-data";
 import { riskToneClasses } from "./theme";
 
+const toneBar: Record<string, string> = {
+  critical: "bg-risk-critical",
+  high:     "bg-risk-high",
+  moderate: "bg-risk-moderate",
+  low:      "bg-risk-low",
+};
+
+const toneFill: Record<string, number> = {
+  critical: 92,
+  high:     74,
+  moderate: 52,
+  low:      28,
+};
+
 export function OverviewStrip() {
   return (
     <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -21,6 +35,14 @@ export function OverviewStrip() {
             </span>
           </div>
           <p className="mt-2 text-sm leading-6 text-slate-500">{item.detail}</p>
+
+          {/* fill bar */}
+          <div className="mt-3 h-1.5 w-full rounded-full bg-slate-100">
+            <div
+              className={`h-1.5 rounded-full ${toneBar[item.tone]} transition-all duration-700`}
+              style={{ width: `${toneFill[item.tone]}%` }}
+            />
+          </div>
         </article>
       ))}
     </section>
