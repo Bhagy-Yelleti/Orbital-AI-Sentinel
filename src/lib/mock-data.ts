@@ -384,112 +384,147 @@ export const quickPrompts = [
 
 export const mockAnalysisResponses: Record<string, AnalysisResult> = {
   default: {
+    situation:
+      "Multi-domain threat convergence detected. Environmental stress, infrastructure fragility, and mobility disruption are reinforcing simultaneously across the assessed corridor.",
+    cause:
+      "Compound signal overlap across hydrology, logistics, and population movement layers. No single driver is dominant — risk is systemic and self-reinforcing.",
     summary:
-      "Multi-source signals indicate an elevated compound risk posture. Environmental stress, infrastructure fragility, and mobility disruption are reinforcing one another, which increases the probability of secondary impacts if no intervention is made.",
+      "Assessment indicates elevated compound risk posture with moderate-to-high probability of secondary cascades if no intervention is initiated within the current window. Signal confidence is sufficient to warrant escalation to priority watch.",
     predictedOutcomes: [
-      "Meaningful humanitarian pressure is likely within 7-14 days if current trajectories hold.",
-      "Adjacent regions may inherit spillover effects through trade, displacement, or service disruption.",
-      "Critical infrastructure reliability is vulnerable where exposure and response capacity are mismatched.",
+      "Humanitarian pressure will materialize within 7–14 days if current trajectories hold. Adjacent regions face spillover exposure through trade, displacement, and service degradation.",
+      "Critical infrastructure reliability is at risk where exposure density and response capacity are mismatched. Failure in one node is likely to propagate.",
+      "Without pre-positioning, response lag will exceed the effective intervention window by an estimated 48–72 hours.",
     ],
     recommendedActions: [
-      "Move the region to priority watch and increase revisit cadence on the highest-risk corridor.",
-      "Pre-position response assets in neighboring safe zones with strong logistics access.",
-      "Brief regional decision-makers with a 72-hour update cycle and escalation thresholds.",
+      "Elevate region to Priority Watch. Increase sensor revisit cadence on highest-risk corridor to 6-hour intervals.",
+      "Pre-position response assets in adjacent safe zones with confirmed logistics access. Do not wait for confirmed escalation.",
+      "Issue 72-hour update cycle to regional decision-makers with defined escalation thresholds and trigger criteria.",
     ],
     confidenceScore: 87,
     riskLevel: "high",
-    timeHorizon: "7-14 days",
-    watchpoints: ["Population movement", "Infrastructure outages", "Commodity availability"],
+    timeHorizon: "7–14 days",
+    watchpoints: ["Population movement vectors", "Infrastructure node failures", "Commodity availability index"],
+    sourceSignals: ["Multi-source fusion", "Orbital SAR", "Logistics telemetry", "Open-source indicators"],
   },
+
   flood: {
+    situation:
+      "CRITICAL — Imminent large-scale inundation event assessed across low-lying urban corridors. Rainfall anomaly has exceeded seasonal norms by 3.4 sigma. River gauge readings are above the 95th historical percentile.",
+    cause:
+      "Sustained monsoon intensification combined with saturated drainage infrastructure and upstream reservoir overflow. Urban heat island effect is amplifying localized precipitation. Drainage capacity is at 100% saturation across primary channels.",
     summary:
-      "Hydrology and precipitation layers are showing strong convergence. Flood expansion is no longer a standalone rainfall story; it is becoming a compound urban resilience event with drainage, access, and health-system implications.",
+      "Hydrology and precipitation layers are in full convergence. This is no longer a standalone rainfall event — it is a compound urban resilience failure with cascading implications for access, sanitation, and health system capacity. Inundation onset is assessed as imminent within the 48–72 hour window.",
     predictedOutcomes: [
-      "Major inundation remains highly probable within 48-72 hours across low-lying districts.",
-      "Evacuation friction will increase where road access overlaps with waterlogging and population density.",
-      "Post-event disease exposure may rise sharply if sanitation systems are disrupted for more than 72 hours.",
+      "Major inundation of low-elevation districts is assessed at 92% probability within 48–72 hours. Affected population exposure estimated at 21.7M.",
+      "Road network passability will degrade sharply within 24 hours of peak rainfall, creating evacuation friction in high-density zones.",
+      "Post-event disease exposure risk (cholera, waterborne pathogens) will escalate significantly if sanitation systems remain disrupted beyond 72 hours.",
     ],
     recommendedActions: [
-      "Trigger evacuation planning for the lowest elevation clusters first.",
-      "Pre-stage mobile water purification, shelter kits, and river monitoring teams.",
-      "Refresh flood extent modeling every 6 hours until precipitation normalizes.",
+      "IMMEDIATE: Trigger evacuation planning for lowest-elevation clusters. Prioritize mobility-limited populations and hospital zones.",
+      "Pre-stage mobile water purification units, emergency shelter kits, and river monitoring teams at forward positions.",
+      "Refresh flood extent modeling every 6 hours. Do not rely on static projections — conditions are evolving faster than baseline models.",
     ],
     confidenceScore: 94,
     riskLevel: "critical",
-    timeHorizon: "48-72 hours",
-    watchpoints: ["River gauge surge", "Road passability", "Hospital backup power"],
+    timeHorizon: "48–72 hours",
+    watchpoints: ["River gauge surge rate", "Road passability index", "Hospital backup power status", "Drainage overflow points"],
+    sourceSignals: ["Hydrology sensors", "Satellite precipitation radar", "Urban drainage telemetry", "Historical analog matching"],
   },
+
   conflict: {
+    situation:
+      "CRITICAL — Escalation markers are rising across armored movement, communications disruption, and civilian displacement vectors. Signal pattern is consistent with fast-deterioration scenario, not a slow-burn political standoff.",
+    cause:
+      "SAR imagery confirms anomalous armored vehicle concentration near logistics nodes. Civilian displacement signals have spiked 340% above baseline over 72 hours. Communications cluster disruptions indicate deliberate infrastructure targeting.",
     summary:
-      "Escalation markers are rising across troop movement, communications strain, and civilian displacement. The signal pattern suggests a fast deterioration scenario rather than a slow-burn political standoff.",
+      "Multi-source convergence across orbital, signals, and field indicators points to imminent kinetic escalation. The window for pre-conflict intervention is narrowing. Civilian corridor integrity is degrading ahead of visible infrastructure damage — a pattern consistent with prior escalation events in this region.",
     predictedOutcomes: [
-      "Localized kinetic escalation is plausible inside one week.",
-      "Civilian access corridors may degrade before infrastructure damage becomes visible.",
-      "Cross-border spillover risk is moderate if displacement accelerates.",
+      "Localized kinetic escalation is assessed as probable within 3–7 days. Confidence: 87%. Civilian access corridors will degrade before infrastructure damage becomes externally visible.",
+      "Cross-border displacement spillover is assessed as moderate risk if population movement accelerates beyond current trajectory.",
+      "Humanitarian supply chain disruption is likely within 5 days. Aid access to forward positions will be severely constrained.",
     ],
     recommendedActions: [
-      "Escalate diplomatic and humanitarian coordination immediately.",
-      "Increase ISR coverage over transport corridors and population exits.",
-      "Prepare continuity plans for power, water, and communications interruptions.",
+      "IMMEDIATE: Escalate diplomatic and humanitarian coordination. Establish protected corridor agreements before access degrades.",
+      "Increase ISR coverage over transport corridors and population exit routes. Prioritize real-time tracking of armored movement.",
+      "Activate continuity plans for power, water, and communications. Do not assume infrastructure will remain intact past Day 3.",
     ],
     confidenceScore: 82,
     riskLevel: "critical",
-    timeHorizon: "3-7 days",
-    watchpoints: ["Border traffic", "Fuel availability", "Communications outages"],
+    timeHorizon: "3–7 days",
+    watchpoints: ["Border crossing traffic volume", "Fuel availability at logistics nodes", "Communications outage clusters", "Armored movement vectors"],
+    sourceSignals: ["Orbital SAR imagery", "Signals intelligence", "Civilian displacement tracking", "Field reports"],
   },
+
   supply: {
+    situation:
+      "HIGH — Chokepoint cascade in progress. Port congestion at 340% of baseline. Insurance premiums have widened 420% over 30 days. Rerouting pressure is building across primary and secondary lanes.",
+    cause:
+      "Simultaneous stress on two critical maritime chokepoints (Malacca, Suez) is compressing global container throughput. AIS traffic divergence confirms active rerouting. Berth dwell time spike indicates systemic congestion, not isolated incident.",
     summary:
-      "The current stress picture suggests a classic chokepoint cascade. Even without a full closure, congestion and risk pricing are sufficient to create knock-on effects for manufacturing and consumer goods.",
+      "The current stress picture is a textbook chokepoint cascade. Even without full closure, congestion and risk pricing are sufficient to generate knock-on effects across electronics, energy, and food supply chains. Alternate routing is available but will increase landed costs materially and extend delivery windows by 14–21 days.",
     predictedOutcomes: [
-      "Shipment delays are likely to persist for multiple weeks if no relief measures are introduced.",
-      "Electronics and energy-sensitive sectors will absorb the earliest cost pressure.",
-      "Alternate routing may stabilize capacity but will still increase landed costs materially.",
+      "Shipment delays of 14–30 days are probable for cargo transiting affected lanes. Electronics and energy-sensitive sectors will absorb earliest cost pressure.",
+      "Inventory buffers in just-in-time manufacturing will reach critical thresholds within 3 weeks if congestion persists.",
+      "Alternate routing via Cape of Good Hope will stabilize capacity but increase per-unit logistics cost by an estimated 18–24%.",
     ],
     recommendedActions: [
-      "Prioritize alternate routing options for critical goods now rather than after full disruption.",
-      "Issue resilience guidance to inventory-sensitive manufacturers and distributors.",
-      "Track insurance, berth utilization, and dwell time as the key leading indicators.",
+      "Activate alternate routing for critical goods immediately. Do not wait for full disruption confirmation — lead time is already inside the buffer window.",
+      "Issue resilience guidance to inventory-sensitive manufacturers. Flag electronics, pharmaceuticals, and perishables as priority categories.",
+      "Monitor insurance spread, berth utilization, and dwell time as primary leading indicators. These will signal recovery before AIS traffic normalizes.",
     ],
     confidenceScore: 79,
     riskLevel: "high",
-    timeHorizon: "14-30 days",
-    watchpoints: ["Port dwell time", "Insurance spread", "Factory inventory buffers"],
+    timeHorizon: "14–30 days",
+    watchpoints: ["Port dwell time", "Insurance spread index", "Factory inventory buffers", "Alternate route capacity"],
+    sourceSignals: ["AIS vessel tracking", "Port telemetry", "Insurance market data", "Trade graph analysis"],
   },
+
   earthquake: {
+    situation:
+      "MODERATE — Seismic monitoring belt remains on elevated watch. Micro-tremor cluster density has increased 280% above baseline. No imminent rupture assessed, but preparedness posture is insufficient for current signal environment.",
+    cause:
+      "Micro-tremor clustering near the Nankai arc is consistent with stress accumulation patterns observed 6–18 months prior to historical moderate-to-major events in this zone. Station variance has increased across three independent monitoring nodes.",
     summary:
-      "The seismic picture is elevated but not yet indicative of imminent failure. The correct posture is disciplined watchfulness with targeted readiness rather than broad alarm.",
+      "The seismic picture is elevated but not indicative of imminent failure. The correct posture is disciplined watchfulness with targeted readiness — not broad alarm. The cost of under-preparation in a dense urban corridor significantly outweighs the cost of precautionary measures.",
     predictedOutcomes: [
-      "Alertness will likely remain elevated over the next cycle of observations.",
-      "False positives are possible, but the cost of under-preparation is high in dense corridors.",
-      "Preparedness messaging may reduce response lag without triggering unnecessary panic.",
+      "Elevated alertness is expected to persist through the next 2–3 observation cycles. Probability of M6.0+ event within 90 days: 42%. Confidence: 71%.",
+      "False positive risk is present, but historical analog matching supports continued elevated watch status.",
+      "If a moderate event occurs, secondary infrastructure failures (power, water, transport) are the primary concern — not direct seismic damage.",
     ],
     recommendedActions: [
-      "Maintain enhanced station watch and daily readiness review.",
-      "Audit emergency communications and shelter readiness in exposed districts.",
-      "Pair technical monitoring with calm public guidance on preparedness steps.",
+      "Maintain enhanced station watch. Conduct daily readiness review with defined escalation triggers.",
+      "Audit emergency communications, shelter readiness, and hospital backup systems in exposed districts.",
+      "Issue calm, factual public preparedness guidance. Avoid language that triggers panic — focus on actionable steps.",
     ],
     confidenceScore: 68,
     riskLevel: "moderate",
-    timeHorizon: "Watchlist",
-    watchpoints: ["Micro-tremor density", "Station variance", "Public readiness posture"],
+    timeHorizon: "90-day watch",
+    watchpoints: ["Micro-tremor density index", "Station variance across nodes", "Public preparedness posture", "Infrastructure resilience audit"],
+    sourceSignals: ["Seismic mesh network", "Historical analog database", "Station telemetry", "Geological survey data"],
   },
+
   wildfire: {
+    situation:
+      "MODERATE — Wildfire ignition risk is elevated across the assessed corridor. Fuel dryness has reached seasonal peak. Offshore wind corridor alignment creates conditions for rapid spread if ignition occurs.",
+    cause:
+      "18-day precipitation deficit has driven vegetation moisture to critical lows. NDVI analysis confirms widespread fuel stress. Diablo wind pattern is forecast to align with primary ignition corridors within 5–9 days.",
     summary:
-      "Wildfire risk is being driven primarily by fuel dryness and wind timing rather than active fire load. This creates a short warning window once ignition conditions align.",
+      "Risk is driven by fuel dryness and wind timing, not active fire load. This creates a compressed warning window — once ignition conditions align, spread potential is high and suppression capacity will be strained. The threat is probabilistic but the consequence profile is severe.",
     predictedOutcomes: [
-      "Rapid spread events become more likely if wind conditions intensify over the next week.",
-      "Smoke exposure could outpace direct flame impact in dense downstream communities.",
-      "Localized suppression strain is possible during back-to-back ignition events.",
+      "Rapid spread events become probable if wind conditions intensify as forecast. Estimated spread rate under peak conditions: 2,000+ acres/hour in primary corridors.",
+      "Smoke exposure will outpace direct flame impact for downstream communities. Air quality degradation is a near-certain secondary effect.",
+      "Simultaneous ignition events will exceed local suppression capacity. Mutual aid activation will be required.",
     ],
     recommendedActions: [
-      "Pre-position response crews at corridor edges rather than in city cores.",
-      "Update ignition watch maps using thermal and vegetation layers each morning.",
-      "Coordinate public advisories around smoke and power shutoff contingencies.",
+      "Pre-position suppression crews at corridor edges — not city cores. Prioritize defensible space at the urban-wildland interface.",
+      "Update ignition watch maps using thermal and vegetation layers each morning. Static risk maps are insufficient for current conditions.",
+      "Coordinate public advisories around smoke exposure, power shutoff contingencies, and evacuation route pre-clearance.",
     ],
     confidenceScore: 76,
     riskLevel: "moderate",
-    timeHorizon: "5-9 days",
-    watchpoints: ["Wind corridor timing", "Fuel moisture", "Ignition density"],
+    timeHorizon: "5–9 days",
+    watchpoints: ["Wind corridor timing", "Fuel moisture index", "Ignition density", "Suppression resource availability"],
+    sourceSignals: ["Thermal vegetation analysis", "NDVI satellite data", "Wind forecast modeling", "Historical fire behavior database"],
   },
 };
 

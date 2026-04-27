@@ -63,6 +63,11 @@ export interface TimelinePoint {
 }
 
 export interface AnalysisResult {
+  /** One-line situation statement */
+  situation: string;
+  /** Root cause assessment */
+  cause: string;
+  /** Narrative summary */
   summary: string;
   predictedOutcomes: string[];
   recommendedActions: string[];
@@ -70,4 +75,6 @@ export interface AnalysisResult {
   riskLevel: RiskLevel;
   timeHorizon: string;
   watchpoints: string[];
+  /** Source signals that informed this assessment */
+  sourceSignals: string[];
 }
