@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Bell, Clock3, Search, ShieldCheck, Signal, Sparkles } from "lucide-react";
+import { Bell, Clock3, Search, ShieldCheck, Sparkles } from "lucide-react";
+import { SystemStatus } from "./SystemStatus";
 
 function formatUtcTime() {
   return new Date().toLocaleTimeString("en-US", {
@@ -37,10 +38,7 @@ export function Navbar() {
       </div>
 
       <div className="ml-4 flex items-center gap-3">
-        <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-500 xl:flex">
-          <Signal className="h-3.5 w-3.5 text-risk-low" />
-          All systems operational
-        </div>
+        <SystemStatus compact />
         <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-500 md:flex">
           <ShieldCheck className="h-3.5 w-3.5 text-cyan-accent" />
           Threat level elevated

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { SystemStatus } from "./SystemStatus";
 import { usePathname } from "next/navigation";
 import {
   Bell,
@@ -88,6 +89,11 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         </div>
       </nav>
 
+      {!collapsed && (
+        <div className="px-3 pb-3">
+          <SystemStatus />
+        </div>
+      )}
       <div className="border-t border-sidebar-border p-3">
         <button
           className="mb-2 flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-sm text-slate-400 hover:bg-white/6 hover:text-white"
