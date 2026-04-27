@@ -8,6 +8,7 @@ import { divIcon, latLngBounds } from "leaflet";
 import type { RiskLocation } from "@/types";
 import { MarkerDetail } from "./MarkerDetail";
 import { categoryMarkerColors, markerPulseClass } from "./theme";
+import { useFilters, matchesFilters } from "./FilterContext";
 
 interface WorldRiskMapClientProps {
   locations: RiskLocation[];
@@ -76,10 +77,16 @@ interface TooltipState {
 export function WorldRiskMapClient({ locations }: WorldRiskMapClientProps) {
   const [selectedLocation, setSelectedLocation] = useState<RiskLocation | null>(null);
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
+  const { region, category } = useFilters();
+
+  const filtered = useMemo(
+    () => locations.filter((l) => matchesFilters({ region: l.region, riskCategory: l.riskCategory }, region, category)),
+    [locations, region, category]
+  );
 
   const bounds = useMemo(
-    () => latLngBounds(locations.map((l) => [l.lat, l.lng])),
-    [locations]
+    () => latLngBounds((filtered.length ? filtered : locations).map((l) => [l.lat, l.lng])),
+    [filtered, locations]
   );
 
   const handleMarkerClick = useCallback(
@@ -136,7 +143,7 @@ export function WorldRiskMapClient({ locations }: WorldRiskMapClientProps) {
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         />
         <MapClickHandler onMapClick={() => setSelectedLocation(null)} />
-        {locations.map((location) => (
+        {filtered.map((location) => (
           <Marker
             key={location.id}
             position={[location.lat, location.lng]}

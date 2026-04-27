@@ -1,12 +1,13 @@
 "use client";
 
-import { riskLocations } from "@/lib/mock-data";
+import { riskLocations, alertFeed } from "@/lib/mock-data";
 import {
   AlertTriangle,
   Clock3,
   ShieldAlert,
   TrendingUp,
 } from "lucide-react";
+import { useFilters, matchesFilters } from "./FilterContext";
 
 // ── Sparkline ────────────────────────────────────────────────────────────────
 function Sparkline({
@@ -135,71 +136,10 @@ function TrendBars({ values, color }: { values: number[]; color: string }) {
 }
 
 // ── Derived data ──────────────────────────────────────────────────────────────
-const criticalCount = riskLocations.filter((l) => l.riskLevel === "critical").length;
-const highCount     = riskLocations.filter((l) => l.riskLevel === "high").length;
-const totalAlerts   = criticalCount * 3 + highCount * 2 + 6; // weighted mock
-
-// Sparkline histories (mock 8-point trend)
-const alertHistory   = [14, 17, 15, 19, 21, 20, 23, totalAlerts];
-const criticalHistory= [1, 2, 2, 3, 3, 3, 3, criticalCount];
-const responseHistory= [22, 19, 21, 18, 17, 16, 15, 14]; // minutes, improving
+// Sparkline histories (mock 8-point trend — last point will be replaced by live filtered value)
+const alertHistory   = [14, 17, 15, 19, 21, 20, 23];
+const criticalHistory= [1, 2, 2, 3, 3, 3, 3];
 const riskHistory    = [5.8, 6.1, 6.4, 6.8, 7.0, 7.1, 7.3, 7.4];
-
-const CARDS = [
-  {
-    id: "alerts",
-    label: "Total Active Alerts",
-    value: totalAlerts,
-    unit: "",
-    sub: `+3 since last cycle`,
-    icon: AlertTriangle,
-    color: "#dc4c3f",
-    trend: "up" as const,
-    trendLabel: "Increasing",
-    chart: <Sparkline values={alertHistory} color="#dc4c3f" />,
-  },
-  {
-    id: "critical",
-    label: "Critical Zones",
-    value: criticalCount,
-    unit: " active",
-    sub: `${highCount} high-severity adjacent`,
-    icon: ShieldAlert,
-    color: "#df7a22",
-    trend: "up" as const,
-    trendLabel: "Escalating",
-    chart: <TrendBars values={criticalHistory} color="#df7a22" />,
-  },
-  {
-    id: "response",
-    label: "Response Time Est.",
-    value: 14,
-    unit: " min",
-    sub: "Down from 22 min (7d avg)",
-    icon: Clock3,
-    color: "#0aa7c7",
-    trend: "down" as const,
-    trendLabel: "Improving",
-    chart: (
-      <div className="relative flex items-center justify-center">
-        <ArcGauge value={14} max={30} color="#0aa7c7" size={52} />
-        <span className="absolute text-[10px] font-bold text-navy">14m</span>
-      </div>
-    ),
-  },
-  {
-    id: "risk",
-    label: "Risk Trend",
-    value: "7.4",
-    unit: " / 10",
-    sub: "+0.6 this week · Elevated",
-    icon: TrendingUp,
-    color: "#b69214",
-    trend: "up" as const,
-    trendLabel: "Rising",
-    chart: <Sparkline values={riskHistory} color="#b69214" />,
-  },
-] as const;
 
 const trendStyles = {
   up:   { text: "text-risk-critical", bg: "bg-risk-critical/8 border-risk-critical/20" },
@@ -207,6 +147,74 @@ const trendStyles = {
 } as const;
 
 export function MetricsCards() {
+  const { region, category } = useFilters();
+
+  const filteredLocations = riskLocations.filter((l) =>
+    matchesFilters({ region: l.region, riskCategory: l.riskCategory }, region, category)
+  );
+  const filteredAlerts = alertFeed.filter((a) =>
+    matchesFilters({ region: a.region, riskCategory: a.riskCategory }, region, category)
+  );
+
+  const criticalCount = filteredLocations.filter((l) => l.riskLevel === "critical").length;
+  const highCount     = filteredLocations.filter((l) => l.riskLevel === "high").length;
+  const totalAlerts   = filteredAlerts.length;
+
+  const CARDS = [
+    {
+      id: "alerts",
+      label: "Total Active Alerts",
+      value: totalAlerts,
+      unit: "",
+      sub: `${criticalCount} critical · ${highCount} high`,
+      icon: AlertTriangle,
+      color: "#dc4c3f",
+      trend: "up" as const,
+      trendLabel: "Increasing",
+      chart: <Sparkline values={[...alertHistory, totalAlerts]} color="#dc4c3f" />,
+    },
+    {
+      id: "critical",
+      label: "Critical Zones",
+      value: criticalCount,
+      unit: " active",
+      sub: `${highCount} high-severity adjacent`,
+      icon: ShieldAlert,
+      color: "#df7a22",
+      trend: "up" as const,
+      trendLabel: "Escalating",
+      chart: <TrendBars values={[...criticalHistory, criticalCount]} color="#df7a22" />,
+    },
+    {
+      id: "response",
+      label: "Response Time Est.",
+      value: 14,
+      unit: " min",
+      sub: "Down from 22 min (7d avg)",
+      icon: Clock3,
+      color: "#0aa7c7",
+      trend: "down" as const,
+      trendLabel: "Improving",
+      chart: (
+        <div className="relative flex items-center justify-center">
+          <ArcGauge value={14} max={30} color="#0aa7c7" size={52} />
+          <span className="absolute text-[10px] font-bold text-navy">14m</span>
+        </div>
+      ),
+    },
+    {
+      id: "risk",
+      label: "Risk Trend",
+      value: "7.4",
+      unit: " / 10",
+      sub: "+0.6 this week · Elevated",
+      icon: TrendingUp,
+      color: "#b69214",
+      trend: "up" as const,
+      trendLabel: "Rising",
+      chart: <Sparkline values={riskHistory} color="#b69214" />,
+    },
+  ] as const;
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {CARDS.map((card) => {
