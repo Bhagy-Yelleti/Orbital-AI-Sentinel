@@ -50,3 +50,20 @@ export function getMarkerColor(level: RiskLevel) {
       return "#0aa7c7";
   }
 }
+
+/** Per-category accent colors for markers */
+export const categoryMarkerColors: Record<RiskCategory, string> = {
+  flood:     "#0aa7c7", // cyan
+  conflict:  "#dc4c3f", // red
+  supply:    "#df7a22", // amber
+  earthquake:"#9b59b6", // purple
+  wildfire:  "#e67e22", // orange
+};
+
+/** Pulse speed class per risk level */
+export const markerPulseClass: Record<RiskLevel, string> = {
+  critical: "sentinel-pulse-critical",
+  high:     "sentinel-pulse-high",
+  moderate: "sentinel-pulse-moderate",
+  low:      "sentinel-pulse-low",
+};
