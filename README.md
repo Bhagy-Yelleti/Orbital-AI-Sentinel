@@ -6,6 +6,9 @@ Orbital AI Sentinel is a polished, high-fidelity crisis monitoring dashboard des
 
 Powered by mock intelligence data with a Gemini-ready analysis flow, it visualizes global risk across multiple dimensions (Flood, Conflict, Supply Chain, Earthquake, Wildfire) with a premium "light-space" visual system.
 
+### 🔴 Live Deployment
+[https://orbital-ai-sentinel.vercel.app](https://orbital-ai-sentinel.vercel.app)
+
 ## ✨ Key Features
 
 ### 1. 🛰️ Operational Global Dashboard
