@@ -4,6 +4,7 @@ import { useMemo, useState, useTransition } from "react";
 import { quickPrompts, riskLocations } from "@/lib/mock-data";
 import type { AnalysisResult } from "@/types";
 import { categoryIcons, riskToneClasses } from "@/components/dashboard/theme";
+import { useLang } from "@/lib/LangContext";
 import {
   AlertTriangle,
   ArrowRight,
@@ -38,6 +39,7 @@ export function AnalysisWorkspace() {
   const [error, setError] = useState("");
   const [result, setResult] = useState<(AnalysisResult & { prompt: string }) | null>(null);
   const [isPending, startTransition] = useTransition();
+  const { tr } = useLang();
 
   const featuredRegions = useMemo(() => riskLocations.slice(0, 4), []);
 
@@ -58,18 +60,18 @@ export function AnalysisWorkspace() {
       <section className="rounded-[1.75rem] border border-slate-200 bg-white p-5 panel-shadow">
         <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
           <Brain className="h-3.5 w-3.5 text-cyan-accent" />
-          Scenario analysis
+          {tr("scenarioAnalysis")}
         </div>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight text-navy">
-          AI analysis panel
+          {tr("aiAnalysisPanel")}
         </h1>
         <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-500">
-          Submit a region, threat posture, or supply scenario. The system returns a structured intelligence assessment derived from satellite-informed signals and response heuristics.
+          {tr("analysisSub")}
         </p>
 
         <div className="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50/80 p-4">
           <label htmlFor="analysis-prompt" className="text-sm font-medium text-navy">
-            Analyze region or scenario
+            {tr("analyzeLabel")}
           </label>
           <textarea
             id="analysis-prompt"
@@ -98,7 +100,7 @@ export function AnalysisWorkspace() {
               className="inline-flex items-center justify-center gap-2 rounded-2xl bg-navy px-4 py-3 text-sm font-medium text-white hover:bg-navy-light disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isPending ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-              Generate analysis
+              {tr("generateAnalysis")}
             </button>
           </div>
           {error && <p className="mt-3 text-sm text-risk-critical">{error}</p>}
@@ -142,9 +144,9 @@ export function AnalysisWorkspace() {
           <div>
             <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
               <Radar className="h-3.5 w-3.5 text-cyan-accent" />
-              Intelligence output
+              {tr("intelligenceOutput")}
             </div>
-            <h2 className="mt-2 text-lg font-semibold text-navy">Threat assessment report</h2>
+            <h2 className="mt-2 text-lg font-semibold text-navy">{tr("threatAssessment")}</h2>
           </div>
           <span className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-500 font-mono">
             ORBITAL-SENTINEL
@@ -155,7 +157,7 @@ export function AnalysisWorkspace() {
           <div className="mt-8 rounded-[1.5rem] border border-dashed border-slate-200 bg-slate-50/70 px-6 py-12 text-center">
             <Brain className="mx-auto h-8 w-8 text-slate-300" />
             <p className="mt-4 text-sm text-slate-500">
-              Submit a scenario to generate a structured intelligence assessment.
+              {tr("runAnalysisPrompt")}
             </p>
           </div>
         )}
@@ -164,7 +166,7 @@ export function AnalysisWorkspace() {
           <div className="mt-8 rounded-[1.5rem] border border-slate-200 bg-slate-50/70 px-6 py-12 text-center">
             <LoaderCircle className="mx-auto h-8 w-8 animate-spin text-cyan-accent" />
             <p className="mt-4 text-sm text-slate-500">
-              Fusing orbital, weather, logistics, and open-source signals…
+              {tr("fusingSub")}
             </p>
           </div>
         )}
@@ -179,10 +181,10 @@ export function AnalysisWorkspace() {
                   {result.riskLevel}
                 </span>
                 <span className="rounded-full bg-white/80 px-2.5 py-1 text-[11px] text-slate-500 border border-slate-200">
-                  {result.timeHorizon}
+                  {tr("timeHorizonLabel")}: {result.timeHorizon}
                 </span>
                 <span className="rounded-full bg-white/80 px-2.5 py-1 text-[11px] text-slate-500 border border-slate-200">
-                  Confidence {result.confidenceScore}%
+                  {tr("confidenceLabel")} {result.confidenceScore}%
                 </span>
               </div>
 
@@ -196,7 +198,7 @@ export function AnalysisWorkspace() {
             <div className="rounded-[1.25rem] border border-slate-200 bg-slate-50/80 p-4">
               <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 mb-2">
                 <Zap className="h-3.5 w-3.5 text-amber-accent" />
-                Root cause
+                {tr("rootCause")}
               </div>
               <p className="text-sm leading-6 text-slate-600">{result.cause}</p>
             </div>
@@ -205,7 +207,7 @@ export function AnalysisWorkspace() {
             <div className="rounded-[1.25rem] border border-slate-200 bg-white p-4">
               <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 mb-2">
                 <AlertTriangle className="h-3.5 w-3.5 text-cyan-accent" />
-                Assessment
+                {tr("assessment")}
               </div>
               <p className="text-sm leading-6 text-slate-600">{result.summary}</p>
             </div>
@@ -213,7 +215,7 @@ export function AnalysisWorkspace() {
             {/* Predicted outcomes */}
             <div>
               <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 mb-3">
-                Predicted outcomes
+                {tr("predictedOutcomes")}
               </div>
               <div className="space-y-2">
                 {result.predictedOutcomes.map((item, i) => (
@@ -230,7 +232,7 @@ export function AnalysisWorkspace() {
             {/* Recommended actions */}
             <div>
               <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 mb-3">
-                Recommended actions
+                {tr("recommendedActions")}
               </div>
               <div className="space-y-2">
                 {result.recommendedActions.map((item, i) => (
@@ -247,7 +249,7 @@ export function AnalysisWorkspace() {
               <div>
                 <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400 mb-2">
                   <Radio className="h-3 w-3" />
-                  Source signals
+                  {tr("sourceSignals")}
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {result.sourceSignals.map((s) => (

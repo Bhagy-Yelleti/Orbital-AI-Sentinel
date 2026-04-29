@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Bell, Clock3, Search, ShieldCheck, Sparkles } from "lucide-react";
 import { SystemStatus } from "./SystemStatus";
+import { useLang } from "@/lib/LangContext";
 
 function formatUtcTime() {
   return new Date().toLocaleTimeString("en-US", {
@@ -16,11 +17,10 @@ function formatUtcTime() {
 
 export function Navbar() {
   const [time, setTime] = useState(formatUtcTime);
+  const { lang, setLang, tr } = useLang();
 
   useEffect(() => {
-    const interval = window.setInterval(() => {
-      setTime(formatUtcTime());
-    }, 1000);
+    const interval = window.setInterval(() => setTime(formatUtcTime()), 1000);
     return () => window.clearInterval(interval);
   }, []);
 
@@ -31,7 +31,7 @@ export function Navbar() {
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
-            placeholder="Search regions, scenarios, or signals"
+            placeholder={tr("searchPlaceholder")}
             className="h-11 w-full rounded-2xl border border-slate-200 bg-slate-50/80 pl-10 pr-4 text-sm text-navy placeholder:text-slate-400 focus:border-cyan-accent focus:bg-white focus:outline-none focus:ring-4 focus:ring-cyan-accent/10"
           />
         </div>
@@ -39,9 +39,36 @@ export function Navbar() {
 
       <div className="ml-4 flex items-center gap-3">
         <SystemStatus compact />
+
+        {/* Language toggle */}
+        <div className="flex items-center rounded-full border border-slate-200 bg-slate-50 p-0.5 text-xs font-semibold">
+          <button
+            type="button"
+            onClick={() => setLang("en")}
+            className={`rounded-full px-3 py-1.5 transition-all ${
+              lang === "en"
+                ? "bg-navy text-white shadow-sm"
+                : "text-slate-500 hover:text-slate-700"
+            }`}
+          >
+            EN
+          </button>
+          <button
+            type="button"
+            onClick={() => setLang("te")}
+            className={`rounded-full px-3 py-1.5 transition-all ${
+              lang === "te"
+                ? "bg-navy text-white shadow-sm"
+                : "text-slate-500 hover:text-slate-700"
+            }`}
+          >
+            తె
+          </button>
+        </div>
+
         <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-500 md:flex">
           <ShieldCheck className="h-3.5 w-3.5 text-cyan-accent" />
-          Threat level elevated
+          {tr("threatLevel")}
         </div>
         <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium text-slate-600 sm:flex">
           <Clock3 className="h-3.5 w-3.5 text-slate-400" />

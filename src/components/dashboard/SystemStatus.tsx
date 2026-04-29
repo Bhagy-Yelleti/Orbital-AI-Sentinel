@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLang } from "@/lib/LangContext";
 
 type StatusLevel = "operational" | "degraded" | "offline";
 
@@ -10,22 +11,10 @@ interface Feed {
   live: boolean;
 }
 
-const FEEDS: Feed[] = [
-  { label: "Satellite Feed",  status: "operational", live: true  },
-  { label: "Data Sync",       status: "operational", live: true  },
-  { label: "AI Engine",       status: "operational", live: false },
-];
-
 const dot: Record<StatusLevel, string> = {
   operational: "bg-risk-low",
   degraded:    "bg-risk-moderate",
   offline:     "bg-risk-critical",
-};
-
-const label: Record<StatusLevel, string> = {
-  operational: "Active",
-  degraded:    "Degraded",
-  offline:     "Offline",
 };
 
 const labelColor: Record<StatusLevel, string> = {
@@ -51,6 +40,19 @@ interface SystemStatusProps {
 
 export function SystemStatus({ compact = false }: SystemStatusProps) {
   const [ts, setTs] = useState(formatTs);
+  const { tr } = useLang();
+
+  const FEEDS: Feed[] = [
+    { label: tr("satelliteFeed"), status: "operational", live: true  },
+    { label: tr("dataSync"),      status: "operational", live: true  },
+    { label: tr("aiEngine"),      status: "operational", live: false },
+  ];
+
+  const label: Record<StatusLevel, string> = {
+    operational: tr("statusActive"),
+    degraded:    tr("statusDegraded"),
+    offline:     tr("statusOffline"),
+  };
 
   useEffect(() => {
     const id = window.setInterval(() => setTs(formatTs()), 1000);
@@ -83,7 +85,7 @@ export function SystemStatus({ compact = false }: SystemStatusProps) {
     <div className="rounded-[1.25rem] border border-white/8 bg-white/4 p-3 space-y-2">
       <div className="flex items-center justify-between mb-1">
         <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-          System status
+          {tr("systemStatus")}
         </span>
         <span className="font-mono text-[10px] text-slate-500">{ts} UTC</span>
       </div>
@@ -101,7 +103,7 @@ export function SystemStatus({ compact = false }: SystemStatusProps) {
       ))}
 
       <div className="pt-1 border-t border-white/8 flex items-center justify-between">
-        <span className="text-[10px] text-slate-500">Last sync</span>
+        <span className="text-[10px] text-slate-500">{tr("lastSync")}</span>
         <span className="font-mono text-[10px] text-slate-400">{ts}</span>
       </div>
     </div>

@@ -2,24 +2,35 @@
 
 import { useFilters, type CategoryFilter, type RegionFilter } from "./FilterContext";
 import { Layers, MapPin } from "lucide-react";
+import { useLang } from "@/lib/LangContext";
 
-const REGIONS: { value: RegionFilter; label: string }[] = [
-  { value: "all",         label: "All Regions" },
-  { value: "Asia",        label: "Asia" },
-  { value: "Europe",      label: "Europe" },
-  { value: "Africa",      label: "Africa" },
-  { value: "Americas",    label: "Americas" },
-  { value: "Middle East", label: "Middle East" },
-  { value: "Indo-Pacific",label: "Indo-Pacific" },
+const REGIONS: { value: RegionFilter; labelKey: "allRegions" | RegionFilter }[] = [
+  { value: "all",          labelKey: "allRegions" },
+  { value: "Asia",         labelKey: "Asia" },
+  { value: "Europe",       labelKey: "Europe" },
+  { value: "Africa",       labelKey: "Africa" },
+  { value: "Americas",     labelKey: "Americas" },
+  { value: "Middle East",  labelKey: "Middle East" },
+  { value: "Indo-Pacific", labelKey: "Indo-Pacific" },
 ];
 
-const CATEGORIES: { value: CategoryFilter; label: string; emoji: string }[] = [
-  { value: "all",        label: "All Types",  emoji: "🌐" },
-  { value: "flood",      label: "Flood",      emoji: "🌊" },
-  { value: "conflict",   label: "Conflict",   emoji: "⚔️" },
-  { value: "supply",     label: "Supply",     emoji: "📦" },
-  { value: "earthquake", label: "Earthquake", emoji: "🌍" },
-  { value: "wildfire",   label: "Wildfire",   emoji: "🔥" },
+const REGION_TE: Record<string, string> = {
+  all: "అన్ని ప్రాంతాలు",
+  Asia: "ఆసియా",
+  Europe: "యూరప్",
+  Africa: "ఆఫ్రికా",
+  Americas: "అమెరికాలు",
+  "Middle East": "మధ్యప్రాచ్యం",
+  "Indo-Pacific": "ఇండో-పసిఫిక్",
+};
+
+const CATEGORIES: { value: CategoryFilter; label: string; labelTe: string; emoji: string }[] = [
+  { value: "all",        label: "All Types",  labelTe: "అన్ని రకాలు",    emoji: "🌐" },
+  { value: "flood",      label: "Flood",      labelTe: "వరద",             emoji: "🌊" },
+  { value: "conflict",   label: "Conflict",   labelTe: "సంఘర్షణ",        emoji: "⚔️" },
+  { value: "supply",     label: "Supply",     labelTe: "సరఫరా",           emoji: "📦" },
+  { value: "earthquake", label: "Earthquake", labelTe: "భూకంపం",          emoji: "🌍" },
+  { value: "wildfire",   label: "Wildfire",   labelTe: "కార్చిచ్చు",      emoji: "🔥" },
 ];
 
 const pill =
@@ -31,6 +42,7 @@ const inactive =
 
 export function FilterBar() {
   const { region, category, setRegion, setCategory } = useFilters();
+  const { lang, tr } = useLang();
 
   return (
     <div className="flex flex-wrap items-center gap-4 rounded-[1.5rem] border border-slate-200 bg-white px-5 py-3.5 panel-shadow">
@@ -38,7 +50,7 @@ export function FilterBar() {
       <div className="flex items-center gap-2">
         <MapPin className="h-3.5 w-3.5 shrink-0 text-slate-400" />
         <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-          Region
+          {tr("filterRegion")}
         </span>
       </div>
       <div className="flex flex-wrap gap-1.5">
@@ -49,7 +61,7 @@ export function FilterBar() {
             onClick={() => setRegion(r.value)}
             className={`${pill} ${region === r.value ? active : inactive}`}
           >
-            {r.label}
+            {lang === "te" ? REGION_TE[r.value] : (r.value === "all" ? tr("allRegions") : r.value)}
           </button>
         ))}
       </div>
@@ -60,7 +72,7 @@ export function FilterBar() {
       <div className="flex items-center gap-2">
         <Layers className="h-3.5 w-3.5 shrink-0 text-slate-400" />
         <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-          Type
+          {tr("filterType")}
         </span>
       </div>
       <div className="flex flex-wrap gap-1.5">
@@ -72,7 +84,7 @@ export function FilterBar() {
             className={`${pill} ${category === c.value ? active : inactive}`}
           >
             <span>{c.emoji}</span>
-            {c.label}
+            {lang === "te" ? c.labelTe : c.label}
           </button>
         ))}
       </div>

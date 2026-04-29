@@ -4,9 +4,11 @@ import { alertFeed } from "@/lib/mock-data";
 import { Radio } from "lucide-react";
 import { categoryIcons, riskDotClasses, riskToneClasses } from "./theme";
 import { useFilters, matchesFilters } from "./FilterContext";
+import { useLang } from "@/lib/LangContext";
 
 export function RiskFeed() {
   const { region, category } = useFilters();
+  const { tr } = useLang();
 
   const filtered = alertFeed.filter((a) =>
     matchesFilters({ region: a.region, riskCategory: a.riskCategory }, region, category)
@@ -18,18 +20,18 @@ export function RiskFeed() {
         <div>
           <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
             <Radio className="h-3.5 w-3.5 text-cyan-accent" />
-            Live risk feed
+            {tr("liveRiskFeed")}
           </div>
           <h2 className="mt-2 text-lg font-semibold text-navy">
-            Analyst-ready alert stream
+            {tr("alertStream")}
           </h2>
         </div>
         <div className="flex items-center gap-2">
           <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs text-slate-500">
-            {filtered.length} alerts
+            {filtered.length} {tr("alerts")}
           </span>
           <div className="rounded-full bg-cyan-soft px-3 py-1 text-xs font-medium text-cyan-accent">
-            Live
+            {tr("live")}
           </div>
         </div>
       </div>
@@ -38,7 +40,7 @@ export function RiskFeed() {
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <span className="text-3xl">🔍</span>
-            <p className="mt-3 text-sm text-slate-400">No alerts match the current filters.</p>
+            <p className="mt-3 text-sm text-slate-400">{tr("noAlerts")}</p>
           </div>
         ) : (
           filtered.map((alert) => {

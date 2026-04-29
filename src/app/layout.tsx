@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { LangProvider } from "@/lib/LangContext";
 
 const inter = Inter({
   variable: "--font-sans-app",
@@ -38,7 +39,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <body className="min-h-full bg-background font-sans text-foreground">
-        {children}
+        <LangProvider>{children}</LangProvider>
       </body>
     </html>
   );
